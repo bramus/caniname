@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" data-syntax-theme="github">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>caniname – Check Project Name Availability Across Netlify, NPM, and More</title>
+  <meta name="description" content="A zero-dependency CLI tool and Node.js library to check project name availability across Netlify, NPM, and more.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://caniname.netlify.app/">
+  <meta property="og:title" content="caniname – Project Name Availability Checker CLI">
+  <meta property="og:description" content="Check availability of one or more project names across Netlify, NPM, and more.">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="caniname – Project Name Availability Checker CLI">
+  <meta name="twitter:description" content="Check availability of one or more project names across Netlify, NPM, and more.">
+  <meta name="twitter:creator" content="@bramus">
+
+  <!-- Note: Using microlighter theme and custom element from davatron5000.github.io (update URL/version as needed) -->
+  <link rel="stylesheet" href="https://davatron5000.github.io/microlighter/microlighter/themes/github.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="https://davatron5000.github.io/microlighter/microlighter/micro-lighter-element.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <div class="title-group">
+          <h1><span class="title-tag">caniname</span></h1>
+        </div>
+        <div class="header-actions">
+          <a href="https://github.com/bramus/caniname" class="github-btn" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub">
+            <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a href="https://npmjs.com/package/caniname" class="npm-btn" target="_blank" rel="noopener noreferrer" aria-label="View on npm">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+              <path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113z" />
+            </svg>
+            <span>npm</span>
+          </a>
+        </div>
+      </div>
+      <p class="description">
+        A zero-dependency CLI tool and Node.js library to check project name availability across services (<strong>Netlify</strong>, <strong>NPM</strong>, and more). Pass one or more candidate names to verify if both <code>&lt;name&gt;.netlify.app</code> and the <code>&lt;name&gt;</code> npm package are free to claim.
+      </p>
+    </header>
+
+    <div class="page-layout">
+      <!-- Sticky Sidebar Navigation (Scrollspy) -->
+      <aside class="sidebar">
+        <nav class="sidenav" aria-label="Page Sections">
+          <div class="sidenav-title">On this page</div>
+          <ul class="sidenav-list">
+            <li><a href="#overview" class="is-active" aria-current="true">Overview</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#usage">CLI Usage &amp; Options</a></li>
+            <li><a href="#checks">Included Checks</a></li>
+            <li><a href="#javascript-api">JavaScript API</a></li>
+            <li><a href="#adding-checks">Adding New Checks</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Overview & Interactive CLI Preview -->
+        <section id="overview">
+          <h2>Overview</h2>
+          <p class="section-desc">
+            Run <code>npx caniname &lt;name&gt;</code> directly in your terminal before starting a new project to check if your chosen name is available on Netlify and NPM. Select a preset below or toggle <code>--json</code> to preview the CLI command and output:
+          </p>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">CLI Command &amp; Output Preview</span>
+              <span class="card-meta">npx caniname</span>
+            </div>
+
+            <div class="preview-controls">
+              <div class="preset-group" role="group" aria-label="Preset commands">
+                <span class="preset-label">Presets:</span>
+                <button type="button" class="preset-chip is-active" data-preset="rich-input">rich-input</button>
+                <button type="button" class="preset-chip" id="preset-random-chip" data-preset="my-cool-new-thing">my-cool-new-thing</button>
+              </div>
+
+              <label class="json-toggle-label" for="toggle-json">
+                <input type="checkbox" id="toggle-json">
+                <span><code>--json</code> output</span>
+              </label>
+            </div>
+
+            <div id="preview-command-container">
+              <micro-lighter language="bash" controls="copy">
+                <pre><code id="preview-command-code">npx caniname rich-input</code></pre>
+              </micro-lighter>
+            </div>
+
+            <div class="terminal-window" aria-live="polite">
+              <div class="terminal-header">
+                <div class="terminal-dots" aria-hidden="true">
+                  <span class="terminal-dot terminal-dot-red"></span>
+                  <span class="terminal-dot terminal-dot-yellow"></span>
+                  <span class="terminal-dot terminal-dot-green"></span>
+                </div>
+                <span class="terminal-title" id="terminal-title">Terminal Output</span>
+                <span class="terminal-exit-badge exit-1" id="terminal-exit-badge">exit code 1</span>
+              </div>
+              <div class="terminal-body" id="terminal-output"></div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <div>
+              <strong>Fun fact:</strong> This tool was originally built under the name <code>namecheck</code>. Upon running <code>./bin/namecheck.js namecheck</code> to dogfood it before publishing, it turned out that <code>namecheck</code> was already taken on both Netlify and NPM—so we used the tool itself to find an available name: <code>caniname</code>.
+            </div>
+          </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+          <h2>Features</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <h3>Zero-Install CLI</h3>
+              <p>Run directly via <code>npx caniname &lt;name&gt;</code> with zero external dependencies (uses Node.js built-in <code>fetch</code> and <code>util.parseArgs</code>).</p>
+            </div>
+            <div class="feature-card">
+              <h3>Batch Name Checking</h3>
+              <p>Pass multiple candidate project names in a single invocation (e.g. <code>npx caniname formula-input calc-input</code>) to compare options side by side.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Parallel Service Execution</h3>
+              <p>All registered service checks run concurrently via <code>Promise.all()</code> for fast results with a 10-second request timeout per check.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Human &amp; JSON Output</h3>
+              <p>Prints colorized status icons (<code>✔</code>, <code>✖</code>, <code>⚠</code>) by default, or structured JSON via <code>-j</code> / <code>--json</code> for scripting and CI pipelines.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Semantic Exit Codes</h3>
+              <p>Exits with code <code>0</code> when all checked names are available across every service, or <code>1</code> when any name is taken or encounters an error.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Pluggable Check Modules</h3>
+              <p>Every check lives in its own file under <code>src/checks/</code> and is automatically discovered and executed in parallel.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- CLI Usage & Options Section -->
+        <section id="usage">
+          <h2>CLI Usage &amp; Options</h2>
+          <p class="section-desc">
+            Run <code>caniname</code> directly with <code>npx</code> (requires Node.js <code>&gt;=20.12.0</code>), or install it globally with <code>npm install -g caniname</code>.
+          </p>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Check One or Multiple Names</span>
+              <span class="card-meta">CLI</span>
+            </div>
+            <micro-lighter language="bash" controls="copy">
+              <pre><code>npx caniname formula-input
+npx caniname formula-input calc-input</code></pre>
+            </micro-lighter>
+            <p class="card-text">Or run locally from a cloned repository:</p>
+            <micro-lighter language="bash" controls="copy">
+              <pre><code>./bin/caniname.js formula-input calc-input</code></pre>
+            </micro-lighter>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Output as JSON (<code>-j</code> / <code>--json</code>)</span>
+              <span class="card-meta">JSON</span>
+            </div>
+            <p class="card-text">
+              Pass <code>--json</code> (or <code>-j</code>) to output machine-readable JSON. When checking a single name, a single result object is printed; when checking multiple names, an array of objects is returned:
+            </p>
+            <micro-lighter language="bash" controls="copy">
+              <pre><code>npx caniname formula-input --json</code></pre>
+            </micro-lighter>
+            <micro-lighter language="json" controls="copy">
+              <pre><code>{
+  "name": "formula-input",
+  "results": [
+    {
+      "id": "netlify",
+      "name": "Netlify",
+      "target": "formula-input.netlify.app",
+      "url": "https://formula-input.netlify.app",
+      "available": false
+    },
+    {
+      "id": "npm",
+      "name": "NPM",
+      "target": "formula-input",
+      "url": "https://www.npmjs.com/package/formula-input",
+      "available": false
+    }
+  ]
+}</code></pre>
+            </micro-lighter>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Option</th>
+                  <th>Short</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>--json</code></td>
+                  <td><code>-j</code></td>
+                  <td>Output availability results as formatted JSON instead of human-readable text.</td>
+                </tr>
+                <tr>
+                  <td><code>--help</code></td>
+                  <td><code>-h</code></td>
+                  <td>Show the CLI help message and usage examples.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Included Checks Section -->
+        <section id="checks">
+          <h2>Included Checks</h2>
+          <p class="section-desc">
+            Out of the box, <code>caniname</code> validates project name formats and checks availability across the following services:
+          </p>
+
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Service</th>
+                  <th>ID</th>
+                  <th>Target Checked</th>
+                  <th>How Availability Is Determined</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Netlify</strong></td>
+                  <td><code>netlify</code></td>
+                  <td><code>&lt;name&gt;.netlify.app</code></td>
+                  <td>Validates subdomain syntax and sends a <code>HEAD</code> request to <code>https://&lt;name&gt;.netlify.app</code>. Unclaimed Netlify subdomains return <code>404</code> without an <code>ETag</code> header.</td>
+                </tr>
+                <tr>
+                  <td><strong>NPM</strong></td>
+                  <td><code>npm</code></td>
+                  <td><code>&lt;name&gt;</code></td>
+                  <td>Validates npm package naming rules (including scoped packages) and sends a <code>HEAD</code> request to <code>https://registry.npmjs.org/&lt;name&gt;</code>. Available when the registry responds with <code>404</code>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- JavaScript API Section -->
+        <section id="javascript-api">
+          <h2>JavaScript API</h2>
+          <p class="section-desc">
+            In addition to the CLI, you can import <code>checkName</code>, <code>checkNames</code>, and <code>loadChecks</code> directly from <code>caniname</code> in Node.js:
+          </p>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Programmatic Usage in Node.js</span>
+              <span class="card-meta">ESM</span>
+            </div>
+            <micro-lighter language="javascript" controls="copy">
+              <pre><code>import { checkName, checkNames, loadChecks } from 'caniname';
+
+// Check a single project name across all built-in services
+const singleResults = await checkName('my-cool-project');
+console.log(singleResults);
+// [
+//   { id: 'netlify', name: 'Netlify', target: 'my-cool-project.netlify.app', url: 'https://my-cool-project.netlify.app', available: true },
+//   { id: 'npm', name: 'NPM', target: 'my-cool-project', url: 'https://www.npmjs.com/package/my-cool-project', available: true }
+// ]
+
+// Check multiple project names in parallel
+const batchResults = await checkNames(['formula-input', 'my-cool-project']);
+
+// Or preload check modules manually
+const checks = await loadChecks();</code></pre>
+            </micro-lighter>
+          </div>
+        </section>
+
+        <!-- Adding New Checks Section -->
+        <section id="adding-checks">
+          <h2>Adding New Checks</h2>
+          <p class="section-desc">
+            Each check lives in its own file inside <a href="https://github.com/bramus/caniname/tree/main/src/checks" target="_blank" rel="noopener noreferrer"><code>src/checks/</code></a>. Any <code>.js</code> file placed in <code>src/checks/</code> is automatically discovered and executed in parallel.
+          </p>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Custom Check Module Template (<code>src/checks/&lt;service&gt;.js</code>)</span>
+              <span class="card-meta">Plugin</span>
+            </div>
+            <micro-lighter language="javascript" controls="copy">
+              <pre><code>export async function check(name) {
+  const normalized = name.trim().toLowerCase();
+  const target = `${normalized}.example.com`;
+  const url = `https://${target}`;
+
+  // Perform availability check...
+  const available = true;
+
+  return {
+    id: 'example',
+    name: 'Example',
+    target,
+    url,
+    available,
+  };
+}
+
+export default {
+  id: 'example',
+  name: 'Example',
+  check,
+};</code></pre>
+            </micro-lighter>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      <p>Created by <a href="https://www.bram.us/" target="_blank" rel="noopener noreferrer">Bramus</a> — Released under the MIT License.</p>
+    </footer>
+  </div>
+</body>
+
+</html>

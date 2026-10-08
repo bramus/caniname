@@ -16,6 +16,9 @@
   ],
   "scripts": {
     "start": "node ./bin/caniname.js",
+    "dev": "npx -y serve website",
+    "deploy": "netlify deploy --dir=website --prod",
+    "deploy:preview": "netlify deploy --dir=website",
     "test": "node --test"
   },
   "keywords": [
@@ -32,6 +35,14 @@
     "url": "https://www.bram.us/"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bramus/caniname.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bramus/caniname/issues"
+  },
+  "homepage": "https://github.com/bramus/caniname#readme",
   "engines": {
     "node": ">=20.12.0"
   }
