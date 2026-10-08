@@ -17,6 +17,7 @@
   "scripts": {
     "start": "node ./bin/caniname.js",
     "dev": "npx -y serve website",
+    "generate-screenshot": "node scripts/generate-screenshot.js",
     "deploy": "netlify deploy --dir=website --prod",
     "deploy:preview": "netlify deploy --dir=website",
     "test": "node --test"
@@ -42,8 +43,11 @@
   "bugs": {
     "url": "https://github.com/bramus/caniname/issues"
   },
-  "homepage": "https://github.com/bramus/caniname#readme",
+  "homepage": "https://caniname.netlify.app/",
   "engines": {
     "node": ">=20.12.0"
+  },
+  "devDependencies": {
+    "puppeteer": "^25.11.0"
   }
 }
