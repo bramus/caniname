@@ -26,7 +26,11 @@
     "netlify",
     "cli"
   ],
-  "author": "Bramus",
+  "author": {
+    "name": "Bramus Van Damme",
+    "email": "bramus@bram.us",
+    "url": "https://www.bram.us/"
+  },
   "license": "MIT",
   "engines": {
     "node": ">=20.12.0"
