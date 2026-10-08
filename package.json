@@ -1,0 +1,33 @@
+{
+  "name": "namecheck",
+  "version": "1.0.0",
+  "description": "CLI tool to check project name availability across Netlify, NPM, and more.",
+  "type": "module",
+  "bin": {
+    "namecheck": "./bin/namecheck.js"
+  },
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "start": "node ./bin/namecheck.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "namecheck",
+    "availability",
+    "npm",
+    "netlify",
+    "cli"
+  ],
+  "author": "Bramus",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.12.0"
+  }
+}
