@@ -1,17 +1,20 @@
-# namecheck
+# caniname
 
 Check availability of a project name across services (Netlify, NPM, and more).
+
+> **Fun fact:** This tool was originally built under the name `namecheck`. Upon running `./bin/namecheck.js namecheck` to dogfood it before publishing, it turned out that `namecheck` was already taken on both Netlify and NPM—so we used the tool itself to find an available name: `caniname`.
 
 ## Usage
 
 ```bash
-npx namecheck formula-input
+npx caniname formula-input
+npx caniname formula-input calc-input
 ```
 
 Or run locally:
 
 ```bash
-node ./bin/namecheck.js formula-input
+./bin/caniname.js formula-input calc-input
 ```
 
 ### Options

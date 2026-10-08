@@ -1,10 +1,10 @@
 {
-  "name": "namecheck",
+  "name": "caniname",
   "version": "1.0.0",
   "description": "CLI tool to check project name availability across Netlify, NPM, and more.",
   "type": "module",
   "bin": {
-    "namecheck": "./bin/namecheck.js"
+    "caniname": "./bin/caniname.js"
   },
   "main": "./src/index.js",
   "exports": {
@@ -15,10 +15,11 @@
     "src"
   ],
   "scripts": {
-    "start": "node ./bin/namecheck.js",
+    "start": "node ./bin/caniname.js",
     "test": "node --test"
   },
   "keywords": [
+    "caniname",
     "namecheck",
     "availability",
     "npm",

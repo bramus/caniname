@@ -29,13 +29,30 @@ export async function loadChecks() {
  * Run all availability checks for a given project name in parallel.
  *
  * @param {string} name - The project name to check
+ * @param {Array<{ id: string, name: string, check: Function }>} [checks] - Optional preloaded check modules
  * @returns {Promise<Array<{ id: string, name: string, target: string, url: string, available: boolean, error?: string }>>}
  */
-export async function checkName(name) {
+export async function checkName(name, checks) {
 	if (typeof name !== 'string' || !name.trim()) {
 		throw new TypeError('A non-empty project name is required.');
 	}
 
+	const activeChecks = checks ?? (await loadChecks());
+	return Promise.all(activeChecks.map((checker) => checker.check(name)));
+}
+
+/**
+ * Run all availability checks for multiple project names.
+ *
+ * @param {string[]} names - Project names to check
+ * @returns {Promise<Array<{ name: string, results: Array<{ id: string, name: string, target: string, url: string, available: boolean, error?: string }> }>>}
+ */
+export async function checkNames(names) {
 	const checks = await loadChecks();
-	return Promise.all(checks.map((checker) => checker.check(name)));
+	return Promise.all(
+		names.map(async (name) => ({
+			name,
+			results: await checkName(name, checks),
+		}))
+	);
 }
